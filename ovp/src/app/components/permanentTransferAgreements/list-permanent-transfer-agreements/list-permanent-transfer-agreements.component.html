@@ -1,0 +1,113 @@
+<div class="container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <div class="row">
+        <!-- Formulaire Mes conventions de Virements Permanents -->
+
+        <form
+          class="text-center border border-light p-5"
+          [formGroup]="permanentTransferAgreementForm"
+          (ngSubmit)="findPermanentTransferAgreements()"
+        >
+          <p class="h4 mb-4">
+            Rechercher des conventions de Virements Permanents
+          </p>
+          <!-- acountNumber -->
+          <input
+            type="text"
+            formControlName="accountNumber"
+            id="idAccountNumber"
+            class="form-control mb-4"
+            placeholder="numéro de compte"
+          />
+          <!-- AmountMin -->
+          <input
+            type="text"
+            formControlName="amountMin"
+            id="idAmountMin"
+            class="form-control mb-4"
+            placeholder="montant minimum"
+          />
+          <!-- AmountMax -->
+          <input
+            type="text"
+            formControlName="amountMax"
+            id="idAmountMmax"
+            class="form-control mb-4"
+            placeholder="montant maximum"
+          />
+          <!-- Send button -->
+          <button mdbBtn color="info" block="true" type="submit">
+            Rechercher
+          </button>
+        </form>
+        <!-- Formulaire Mes conventions de Virements Permanents  -->
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-6">
+          <h2><b>Mes conventions de Virements Permanents</b></h2>
+        </div>
+        <div class="col-sm-6">
+          <a
+            routerLink="create"
+            routerLinkActive="active"
+            class="btn btn-success"
+            data-toggle="modal"
+          >
+            <i class="material-icons">&#xE147;</i>
+            <span>Ajouter une Convention de Virement Permanent</span></a
+          >
+        </div>
+      </div>
+    </div>
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Date d’échéance</th>
+          <th>Date de la prochaine échéance</th>
+          <th>Montant</th>
+          <th>Libellé du motif de l’ordre financier</th>
+          <th>Réduction client</th>
+          <th>Remise client</th>
+          <th>Identifiant canal tecc</th>
+          <th>Numéro de compte du client</th>
+          <th>Nom du bénéficiaire</th>
+          <th>IBAN du bénéficiaire</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ovp of listPermanentTransferAgreements">
+          <td>{{ ovp?.dueDate }}</td>
+          <td>{{ ovp?.nextDueDate }}</td>
+          <td>{{ ovp?.amount }}</td>
+          <td>{{ ovp?.financialOrderReason }}</td>
+          <td>{{ ovp?.reductionCustomer }}</td>
+          <td>{{ ovp?.customerReference }}</td>
+          <td>{{ ovp?.teccCanalId }}</td>
+          <td>{{ ovp?.customerAccountNumber }}</td>
+          <td>{{ ovp?.creditor?.name }}</td>
+          <td>{{ ovp?.creditor?.iban }}</td>
+          <td>
+            <a [routerLink]="['detail', ovp.btoa()]"  class="edit" data-toggle="modal"
+              ><i class="material-icons" data-toggle="tooltip" title="Edit"
+                >&#xE254;</i
+              ></a
+            >
+            <a routerLink="delete" [state]="ovp.btoa()" class="delete" data-toggle="modal"
+              ><i class="material-icons" data-toggle="tooltip" title="Delete"
+                >&#xE872;</i
+              ></a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
