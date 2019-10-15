@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./list-permanent-transfer-agreements.component.css']
 })
 export class ListPermanentTransferAgreementsComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy { 
   obs: Subscription;
   permanentTransferAgreementForm: FormGroup;
   listPermanentTransferAgreements: Array<PermanentTransferAgreement> = [];
@@ -24,9 +24,9 @@ export class ListPermanentTransferAgreementsComponent
     private formBuilder: FormBuilder,
     private globalService: GlobalService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
-  ngOnInit() {
+  ngOnInit() {   
     if (this.globalService.ListPermanentTransferAgreements) {
       this.permanentTransferAgreementForm = this.globalService.ListPermanentTransferAgreements;
     } else {

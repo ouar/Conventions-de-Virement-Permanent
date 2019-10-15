@@ -5,43 +5,63 @@
       <form>
         <div class="modal-header">
           <h4 class="modal-title">Créer une Conventions de Virement Permanent</h4>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-hidden="true"
-          >
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             &times;
           </button>
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label>Name</label>
+            <label>Compte à débiter</label>
             <input type="text" class="form-control" required />
           </div>
           <div class="form-group">
-            <label>Email</label>
+            <label>Compte à créditer</label>
+            <input type="text" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label>Périodicité</label>
+            <ul>
+              <li *ngFor="let periodicity of periodicities">
+                <span>{{periodicity.id}}</span> {{periodicity.wording}}
+              </li>
+            </ul>
+          </div>
+          <div class="form-group">
+            <label>Montant de l'opération</label>
+            <input type="text" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <input [matDatepicker]="myDatepicker">
+            <mat-datepicker #myDatepicker></mat-datepicker>
+            <label>Date de réglement</label>
             <input type="email" class="form-control" required />
           </div>
-          <div class="form-group">
-            <label>Address</label>
-            <textarea class="form-control" required></textarea>
+          <div>
+            <label>Saisir des références complémentaires</label>
           </div>
           <div class="form-group">
-            <label>Phone</label>
-            <input type="text" class="form-control" required />
+            <label>Référence du paiement (recommandé)</label>
+            <input dtype="text" maxlength="35" placeholder="Référence du paiement (recommandé)" />
+          </div>
+          <div class="form-group">
+            <label>Motif du paiement (recommandé)</label>
+            <input dtype="text" maxlength="35" placeholder="Motif du paiement (recommandé)" />
+          </div>
+          <div class="form-group">
+            <label>Motif du paiement (recommandé)</label>
+            <input dtype="text" maxlength="35" placeholder="Motif du paiement (recommandé)" />
+          </div>
+          <div class="form-group">
+            <label>Motif du paiement (recommandé)</label>
+            <input dtype="text" maxlength="35" placeholder="Motif du paiement (recommandé)" />
           </div>
         </div>
         <div class="modal-footer">
-          <input
-            type="button"
-            class="btn btn-default"
-            data-dismiss="modal"
-            value="Annuler"
-            (click)="backClicked()"
-          />
+          <input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler" (click)="backClicked()" />
           <input type="submit" class="btn btn-success" value="Ajouter" />
         </div>
+
+        <p><i>Les caractères suivants sont autorisés : a à z, A à Z, 0 à 9, / - ? : ( ) . ,</i></p>
       </form>
     </div>
   </div>
