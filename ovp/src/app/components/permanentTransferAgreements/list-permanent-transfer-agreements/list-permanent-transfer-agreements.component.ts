@@ -1,3 +1,6 @@
+// tslint:disable-next-line: max-line-length
+import { CreatePermanentTransferAgreementsComponent } from './../create-permanent-transfer-agreements/create-permanent-transfer-agreements.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageComponent } from './../message/message.component';
 import { GlobalService } from './../../../shared/services/global.service';
 import { Subscription } from 'rxjs';
@@ -14,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./list-permanent-transfer-agreements.component.css']
 })
 export class ListPermanentTransferAgreementsComponent
-  implements OnInit, OnDestroy { 
+  implements OnInit, OnDestroy {
   obs: Subscription;
   permanentTransferAgreementForm: FormGroup;
   listPermanentTransferAgreements: Array<PermanentTransferAgreement> = [];
@@ -23,10 +26,11 @@ export class ListPermanentTransferAgreementsComponent
     private permanentTransferAgreementsService: PermanentTransferAgreementsService,
     private formBuilder: FormBuilder,
     private globalService: GlobalService,
-    private dialog: MatDialog
-  ) { }
+    private dialog: MatDialog,
+    private modalService: NgbModal
+  ) {}
 
-  ngOnInit() {   
+  ngOnInit() {
     if (this.globalService.ListPermanentTransferAgreements) {
       this.permanentTransferAgreementForm = this.globalService.ListPermanentTransferAgreements;
     } else {
@@ -77,5 +81,11 @@ export class ListPermanentTransferAgreementsComponent
       this.obs.unsubscribe();
     }
     this.globalService.ListPermanentTransferAgreements = this.permanentTransferAgreementForm;
+  }
+
+  openModal() {
+    const modalRef = this.modalService.open(
+      CreatePermanentTransferAgreementsComponent, { size: 'lg' }
+    );
   }
 }

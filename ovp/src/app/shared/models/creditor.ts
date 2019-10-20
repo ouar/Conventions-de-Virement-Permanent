@@ -1,8 +1,13 @@
+import { JsonProperty } from 'json-typescript-mapper';
 export class Creditor {
-  name: string;
-  iban: string;
-  bic: string;
-  accountNumber: string;
+  @JsonProperty('name')
+  name?: string;
+  @JsonProperty('iban')
+  iban?: string;
+  @JsonProperty('bic')
+  bic?: string;
+  @JsonProperty('account_number')
+  accountNumber?: string;
 
   constructor() {
     this.accountNumber = void 0;

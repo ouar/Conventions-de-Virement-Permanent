@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl : 'http://ELZUDEGGSCBP.yres.ytech:21032/RESS_Permanent_Transfer_Agreement/v1/permanent_transfer_agreements/'
+  baseUrl : 'http://localhost:8080/permanent_transfer_agreements/'
+  //baseUrl : 'http://ELZUDEGGSCBP.yres.ytech:21032/RESS_Permanent_Transfer_Agreement/v1/permanent_transfer_agreements/'
 
 };
 

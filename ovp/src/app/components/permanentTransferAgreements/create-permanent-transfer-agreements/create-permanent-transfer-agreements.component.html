@@ -1,67 +1,125 @@
-<!-- Edit Modal HTML -->
-<div id="addEmployeeModal" class="">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form>
-        <div class="modal-header">
-          <h4 class="modal-title">Créer une Conventions de Virement Permanent</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            &times;
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label>Compte à débiter</label>
-            <input type="text" class="form-control" required />
-          </div>
-          <div class="form-group">
-            <label>Compte à créditer</label>
-            <input type="text" class="form-control" required />
-          </div>
-          <div class="form-group">
-            <label>Périodicité</label>
-            <ul>
-              <li *ngFor="let periodicity of periodicities">
-                <span>{{periodicity.id}}</span> {{periodicity.wording}}
-              </li>
-            </ul>
-          </div>
-          <div class="form-group">
-            <label>Montant de l'opération</label>
-            <input type="text" class="form-control" required />
-          </div>
-          <div class="form-group">
-            <input matInput [matDatepicker]="picker" placeholder="Date de réglement">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>           
-          </div>
-          <div>
-            <label>Saisir des références complémentaires</label>
-          </div>
-          <div class="form-group">
-            <label>Référence du paiement (recommandé)</label>
-            <input dtype="text" maxlength="35" placeholder="Référence du paiement (recommandé)" />
-          </div>
-          <div class="form-group">
-            <label>Motif du paiement (recommandé)</label>
-            <input dtype="text" maxlength="35" placeholder="Motif du paiement (recommandé)" />
-          </div>
-          <div class="form-group">
-            <label>Motif du paiement (recommandé)</label>
-            <input dtype="text" maxlength="35" placeholder="Motif du paiement (recommandé)" />
-          </div>
-          <div class="form-group">
-            <label>Motif du paiement (recommandé)</label>
-            <input dtype="text" maxlength="35" placeholder="Motif du paiement (recommandé)" />
-          </div>
-        </div>
-        <div class="modal-footer">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler" (click)="backClicked()" />
-          <input type="submit" class="btn btn-success" value="Ajouter" />
-        </div>
-
-        <p><i>Les caractères suivants sont autorisés : a à z, A à Z, 0 à 9, / - ? : ( ) . ,</i></p>
-      </form>
+<div class="modal-header">
+  <h4 class="modal-title">
+    Créer une Conventions de Virement Permanent
+  </h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form
+    [formGroup]="createOVPForm"
+    (ngSubmit)="createPermanentTransferAgreements()"
+  >
+    <div class="form-group">
+      <label>Compte à débiter</label>
+      <input
+        type="text"
+        formControlName="customerAccountNumber"
+        id="idCustomerAccountNumber"
+        class="form-control"
+        required
+      />
     </div>
-  </div>
+    <div class="form-group">
+      <label>Compte à créditer</label>
+      <input
+        type="text"
+        formControlName="creditorAccountNumber"
+        id="idCreditorAccountNumber"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label>Périodicité</label>
+      <select
+        formControlName="periodicityId"
+        name="periodicities"
+        id="periodicity-select"
+      >
+        <option
+          *ngFor="let periodicity of periodicities"
+          [ngValue]="periodicity.id"
+          >{{ periodicity.wording }}</option
+        >
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Montant de l'opération</label>
+      <input
+        type="text"
+        formControlName="amount"
+        id="idAmount"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="dateOfBirth">Date d'échéance</label>
+      <div class="input-group">
+        <input
+          id="idDueDate"
+          formControlName="dueDate"
+          class="form-control"
+          placeholder="yyyy-mm-dd"
+          name="dueDate"
+          ngbDatepicker
+          #dueDate="ngbDatepicker"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-outline-secondary calendar"
+            (click)="dueDate.toggle()"
+            type="button"
+          ></button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <label>Saisir des références complémentaires :</label>
+    </div>
+    <div class="form-group">
+      <label>Référence du paiement (recommandé)</label>
+      <input
+        dtype="text"
+        maxlength="35"
+        formControlName="teccCanalId"
+        id="idTeccCanalId"
+        placeholder="Référence du paiement (recommandé)"
+      />
+    </div>
+    <div class="form-group">
+      <label>Motif du paiement (recommandé)</label>
+      <input
+        dtype="text"
+        maxlength="35"
+        placeholder="Motif du paiement (recommandé)"
+      />
+    </div>
+    <div class="form-group">
+      <label>Motif du paiement (recommandé)</label>
+      <input
+        dtype="text"
+        maxlength="35"
+        placeholder="Motif du paiement (recommandé)"
+      />
+    </div>
+    <div class="form-group">
+      <label>Motif du paiement (recommandé)</label>
+      <input
+        dtype="text"
+        maxlength="35"
+        placeholder="Motif du paiement (recommandé)"
+      />
+    </div>
+    <div class="modal-footer">
+      <input type="submit" class="btn btn-success" value="Ajouter" />
+    </div>
+  </form>
 </div>

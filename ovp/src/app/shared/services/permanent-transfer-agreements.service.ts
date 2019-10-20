@@ -1,6 +1,6 @@
 import { PermanentTransferAgreement } from 'src/app/shared/models/permanent-transfer-agreement';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -31,6 +31,20 @@ export class PermanentTransferAgreementsService {
         account_number: searchCriteria.accountNumber,
         amount_min: searchCriteria.amountMin,
         amount_max: searchCriteria.amountMax
+      },
+      headers
+    });
+  }
+  createPermanentTransferAgreements(
+    permanentTransferAgreement: PermanentTransferAgreement
+  ): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.append('content-type', 'application/json');
+    headers = headers.append('idCR', '87800');
+    // tslint:disable-next-line: align
+    return this.http.post(this.baseUrl, permanentTransferAgreement, {
+      params: {
+        regional_bank_id: '87800'
       },
       headers
     });
