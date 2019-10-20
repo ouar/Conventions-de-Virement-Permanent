@@ -82,41 +82,54 @@
       </div>
     </div>
     <div>
-      <label>Saisir des références complémentaires :</label>
+      <button
+        class="btn btn-primary"
+        type="button"
+        data-toggle="collapse"
+        data-target="#referencesComplementaires"
+        aria-expanded="false"
+        aria-controls="referencesComplementaires"
+      >
+        Saisir des références complémentaires :
+      </button>
     </div>
-    <div class="form-group">
-      <label>Référence du paiement (recommandé)</label>
-      <input
-        dtype="text"
-        maxlength="35"
-        formControlName="teccCanalId"
-        id="idTeccCanalId"
-        placeholder="Référence du paiement (recommandé)"
-      />
-    </div>
-    <div class="form-group">
-      <label>Motif du paiement (recommandé)</label>
-      <input
-        dtype="text"
-        maxlength="35"
-        placeholder="Motif du paiement (recommandé)"
-      />
-    </div>
-    <div class="form-group">
-      <label>Motif du paiement (recommandé)</label>
-      <input
-        dtype="text"
-        maxlength="35"
-        placeholder="Motif du paiement (recommandé)"
-      />
-    </div>
-    <div class="form-group">
-      <label>Motif du paiement (recommandé)</label>
-      <input
-        dtype="text"
-        maxlength="35"
-        placeholder="Motif du paiement (recommandé)"
-      />
+    <div class="collapse" id="referencesComplementaires">
+      <div class="card card-body">
+        <div class="form-group">
+          <label>Référence du paiement (recommandé) :</label>
+          <input
+            dtype="text"
+            maxlength="35"
+            formControlName="teccCanalId"
+            id="idTeccCanalId"
+            placeholder="Référence du paiement (recommandé)"
+          />
+        </div>
+        <div class="form-group">
+          <label>Motif du paiement (recommandé) :</label>
+          <input
+            dtype="text"
+            maxlength="35"
+            placeholder="Motif du paiement (recommandé)"
+          />
+        </div>
+        <div class="form-group">
+          <label>Motif du paiement (recommandé) :</label>
+          <input
+            dtype="text"
+            maxlength="35"
+            placeholder="Motif du paiement (recommandé)"
+          />
+        </div>
+        <div class="form-group">
+          <label>Motif du paiement (recommandé) :</label>
+          <input
+            dtype="text"
+            maxlength="35"
+            placeholder="Motif du paiement (recommandé)"
+          />
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
       <input type="submit" class="btn btn-success" value="Ajouter" />
