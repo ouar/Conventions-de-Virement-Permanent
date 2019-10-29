@@ -3,12 +3,10 @@ import { MessageComponent } from './../message/message.component';
 import { PermanentTransferAgreementsService } from './../../../shared/services/permanent-transfer-agreements.service';
 import { PermanentTransferAgreement } from 'src/app/shared/models/permanent-transfer-agreement';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PERIODICITIES } from '../../../shared/models/list-periodicity';
 import { serialize } from 'json-typescript-mapper';
 import { Creditor } from 'src/app/shared/models/creditor';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 
@@ -21,14 +19,11 @@ export class CreatePermanentTransferAgreementsComponent implements OnInit {
   periodicities;
   createOVPForm: FormGroup;
   permanentTransferAgreement: PermanentTransferAgreement;
-  @Output() passEntry: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private datepipe: DatePipe,
-    private location: Location,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
-    private modalService: NgbModal,
     public activeModal: NgbActiveModal,
     private permanentTransferAgreementsService: PermanentTransferAgreementsService
   ) {}
@@ -55,11 +50,18 @@ export class CreatePermanentTransferAgreementsComponent implements OnInit {
     this.permanentTransferAgreement.amount = this.createOVPForm.value.amount;
     this.permanentTransferAgreement.customerAccountNumber = this.createOVPForm.value.customerAccountNumber;
     // tslint:disable-next-line: max-line-length
-    const date = new Date(this.createOVPForm.value.dueDate.year, this.createOVPForm.value.dueDate.month - 1, this.createOVPForm.value.dueDate.day);
-    this.permanentTransferAgreement.dueDate = this.datepipe.transform(date, 'yyyy-MM-dd');;
-    console.log(this.createOVPForm.value.dueDate);
+    const date = new Date(
+      this.createOVPForm.value.dueDate.year,
+      this.createOVPForm.value.dueDate.month - 1,
+      this.createOVPForm.value.dueDate.day
+    );
+    this.permanentTransferAgreement.dueDate = this.datepipe.transform(
+      date,
+      'yyyy-MM-dd'
+    );
+
     this.permanentTransferAgreementsService
-      .createPermanentTransferAgreements(
+      .createPermanentTransferAgreement(
         serialize(this.permanentTransferAgreement)
       )
       .subscribe(
