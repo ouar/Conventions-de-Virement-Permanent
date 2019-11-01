@@ -4,42 +4,18 @@
       <div class="row">
         <!-- Formulaire Mes conventions de Virements Permanents -->
 
-        <form
-          class="text-center border border-light p-5"
-          [formGroup]="permanentTransferAgreementForm"
-          (ngSubmit)="findPermanentTransferAgreements()"
-        >
+        <form class="text-center border border-light p-5" [formGroup]="permanentTransferAgreementForm" (ngSubmit)="findPermanentTransferAgreements()">
           <p class="h4 mb-4">
             Rechercher des conventions de Virements Permanents
           </p>
           <!-- acountNumber -->
-          <input
-            type="text"
-            formControlName="accountNumber"
-            id="idAccountNumber"
-            class="form-control mb-4"
-            placeholder="numéro de compte"
-          />
+          <input type="text" formControlName="accountNumber" id="idAccountNumber" class="form-control mb-4" placeholder="numéro de compte" />
           <!-- AmountMin -->
-          <input
-            type="text"
-            formControlName="amountMin"
-            id="idAmountMin"
-            class="form-control mb-4"
-            placeholder="montant minimum"
-          />
+          <input type="text" formControlName="amountMin" id="idAmountMin" class="form-control mb-4" placeholder="montant minimum" />
           <!-- AmountMax -->
-          <input
-            type="text"
-            formControlName="amountMax"
-            id="idAmountMmax"
-            class="form-control mb-4"
-            placeholder="montant maximum"
-          />
+          <input type="text" formControlName="amountMax" id="idAmountMmax" class="form-control mb-4" placeholder="montant maximum" />
           <!-- Send button -->
-          <button mdbBtn color="info" block="true" type="submit">
-            Rechercher
-          </button>
+          <button type="button" type="submit" class="btn btn-primary" [disabled]="permanentTransferAgreementForm.invalid">Rechercher</button>
         </form>
         <!-- Formulaire Mes conventions de Virements Permanents  -->
       </div>
@@ -54,8 +30,9 @@
           <h2><b>Mes conventions de Virements Permanents</b></h2>
         </div>
         <div class="col-sm-6">
- 
-            <button class="btn btn-success" (click)="openModal()">Ajouter une Convention de Virement Permanent</button>
+
+          <button class="btn btn-success" (click)="createPermanentTransferAgreement()">Ajouter une Convention de
+            Virement Permanent</button>
         </div>
       </div>
     </div>
@@ -88,16 +65,8 @@
           <td>{{ ovp?.creditor?.name }}</td>
           <td>{{ ovp?.creditor?.iban }}</td>
           <td>
-            <a [routerLink]="['detail', ovp.btoa()]"  class="edit" data-toggle="modal"
-              ><i class="material-icons" data-toggle="tooltip" title="Edit"
-                >&#xE254;</i
-              ></a
-            >
-            <a routerLink="delete" [state]="ovp.btoa()" class="delete" data-toggle="modal"
-              ><i class="material-icons" data-toggle="tooltip" title="Delete"
-                >&#xE872;</i
-              ></a
-            >
+            <button (click)="editPermanentTransferAgreement(ovp)" type="button" class="btn btn-xs btn-link">Modifier</button>
+            <button (click)="deletePermanentTransferAgreement(ovp)" href="" type="button" class="btn btn-xs btn-danger">Supprimer</button>
           </td>
         </tr>
       </tbody>

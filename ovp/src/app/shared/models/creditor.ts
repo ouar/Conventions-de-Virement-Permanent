@@ -3,11 +3,11 @@ export class Creditor {
   @JsonProperty('name')
   name?: string;
   @JsonProperty('iban')
-  iban?: string;
+  iban?: string;   ////////////////////////
   @JsonProperty('bic')
   bic?: string;
   @JsonProperty('account_number')
-  accountNumber?: string;
+  accountNumber?: string;   ////////////////////////
 
   constructor() {
     this.accountNumber = void 0;

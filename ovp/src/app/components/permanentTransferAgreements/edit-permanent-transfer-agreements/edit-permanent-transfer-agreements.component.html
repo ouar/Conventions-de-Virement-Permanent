@@ -1,36 +1,91 @@
-<!-- Edit Modal HTML -->
-<div id="editEmployeeModal" class="">
-  <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Edit Employee</h4>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-hidden="true"
-          >
-            &times;
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label>Montant</label>
-            <input type="" class="form-control"  value="{{permanentTransferAgreement?.amount}}"/>
-          </div>
-          <div class="form-group">
-            <label>codePermanentTransferAgreement</label>
-            <input type="email" class="form-control"  value="{{permanentTransferAgreement?.codeDueDate}}"/>
-          </div>
-          <div class="form-group">
-            <label>financialOrderReason</label>
-            <input type="email" class="form-control"  value="{{permanentTransferAgreement?.financialOrderReason}}"/>
-          </div>
-          <div class="form-group">
-            <label>reductionCustomer</label>
-            <input type="email" class="form-control"  value="{{permanentTransferAgreement?.reductionCustomer}}"/>
-          </div>
-        </div>
+<div class="modal-header">
+  <h4 class="modal-title">
+    Modifier une Conventions de Virement Permanent
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="updateOVPForm" (ngSubmit)="updatePermanentTransferAgreement()">
+    <div class="form-group">
+      <label>Compte à débiter (donneur d'ordre)</label>
+      <input type="text" formControlName="customerAccountNumber" id="idCustomerAccountNumber" class="form-control"
+        [value]="permanentTransferAgreement.customerAccountNumber" required />
     </div>
-  </div>
+    <div class="form-group">
+      <label>Compte à créditer (bénéficiaire)</label>
+      <input type="text" formControlName="creditorAccountNumber" id="idCreditorAccountNumber" class="form-control"
+        [value]="permanentTransferAgreement.creditor.iban" required />
+    </div>
+    <div class="form-group">
+      <label>Bic de la banque à créditer (bénéficiaire)</label>
+      <input type="text" formControlName="creditorBic" id="idCreditorBic" class="form-control" [value]="permanentTransferAgreement.creditor.bic"
+        required />
+    </div>
+    <div class="form-group">
+      <label>Nom du bénéficiaire</label>
+      <input type="text" formControlName="creditorName" id="idCreditorName" class="form-control" [value]="permanentTransferAgreement.creditor.name"
+        required />
+    </div>
+    <div class="form-group">
+      <label>Périodicité</label>
+      <select formControlName="periodicityId" name="periodicities" id="periodicity-select" [value]="pad(permanentTransferAgreement.periodicityId,2)">
+        <option *ngFor="let periodicity of periodicities" [value]="periodicity.id">{{ periodicity.wording }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Montant de l'opération</label>
+      <input type="text" formControlName="amount" id="idAmount" class="form-control" required [value]="permanentTransferAgreement.amount" />
+    </div>
+    <div class="form-group">
+      <label for="dateOfBirth">Prochaine Date d'échéance</label>
+      <div class="input-group">
+        <input id="idNextDueDate" formControlName="nextDueDate" class="form-control" placeholder="yyyy-mm-dd" name="nextDueDate"
+          ngbDatepicker #nextDueDate="ngbDatepicker" />
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="nextDueDate.toggle()" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="dateOfBirth">Date de dernière échéance</label>
+      <div class="input-group">
+        <input id="idEndDueDate" formControlName="endDueDate" class="form-control" placeholder="yyyy-mm-dd" name="endDueDate"
+          ngbDatepicker #endDueDate="ngbDatepicker" />
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="endDueDate.toggle()" type="button"></button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#referencesComplementaires"
+        aria-expanded="false" aria-controls="referencesComplementaires">
+        Références complémentaires :
+      </button>
+    </div>
+    <div class="collapse" id="referencesComplementaires">
+      <div class="card card-body">
+        <div class="form-group">
+          <label>Référence du paiement (recommandé) :</label>
+          <input dtype="text" maxlength="35" formControlName="teccCanalId" id="idTeccCanalId" />
+        </div>
+        <div class="form-group">
+          <label>Motif du paiement (recommandé) :</label>
+          <input dtype="text" maxlength="35" />
+        </div>
+        <div class="form-group">
+          <label>Motif du paiement (recommandé) :</label>
+          <input dtype="text" maxlength="35" />
+        </div>
+        <div class="form-group">
+          <label>Motif du paiement (recommandé) :</label>
+          <input dtype="text" maxlength="35" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <input type="submit" class="btn btn-success" [disabled]="updateOVPForm.invalid || !updateOVPForm.dirty" value="Modifier" />
+    </div>
+  </form>
 </div>

@@ -1,95 +1,55 @@
 <div class="modal-header">
   <h4 class="modal-title">
-    Créer une Conventions de Virement Permanent
+    Créer une Convention de Virement Permanent
   </h4>
-  <button
-    type="button"
-    class="close"
-    aria-label="Close"
-    (click)="activeModal.dismiss('Cross click')"
-  >
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
-  <form
-    [formGroup]="createOVPForm"
-    (ngSubmit)="createPermanentTransferAgreements()"
-  >
+  <form [formGroup]="createOVPForm" (ngSubmit)="createPermanentTransferAgreements()">
     <div class="form-group">
-      <label>Compte à débiter</label>
-      <input
-        type="text"
-        formControlName="customerAccountNumber"
-        id="idCustomerAccountNumber"
-        class="form-control"
-        required
-      />
+      <label>Compte à débiter (donneur d'ordre)</label>
+      <input type="text" formControlName="customerAccountNumber" id="idCustomerAccountNumber" class="form-control"
+        required />
     </div>
     <div class="form-group">
-      <label>Compte à créditer</label>
-      <input
-        type="text"
-        formControlName="creditorAccountNumber"
-        id="idCreditorAccountNumber"
-        class="form-control"
-        required
-      />
+      <label>Compte à créditer (bénéficiaire)</label>
+      <input type="text" formControlName="creditorAccountNumber" id="idCreditorAccountNumber" class="form-control"
+        required />
     </div>
     <div class="form-group">
-      <label>Périodicité</label>
-      <select
-        formControlName="periodicityId"
-        name="periodicities"
-        id="periodicity-select"
-      >
-        <option
-          *ngFor="let periodicity of periodicities"
-          [ngValue]="periodicity.id"
-          >{{ periodicity.wording }}</option
-        >
+      <label>Bic de la banque à créditer (bénéficiaire)</label>
+      <input type="text" formControlName="creditorBic" id="idCreditorBic" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label>Nom du bénéficiaire</label>
+      <input type="text" formControlName="creditorName" id="idCreditorName" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label>Périodicité : </label>
+      <select formControlName="periodicityId" name="periodicities" id="periodicity-select">
+        <option *ngFor="let periodicity of periodicities" [ngValue]="periodicity.id">{{ periodicity.wording }}</option>
       </select>
     </div>
+
     <div class="form-group">
       <label>Montant de l'opération</label>
-      <input
-        type="text"
-        formControlName="amount"
-        id="idAmount"
-        class="form-control"
-        required
-      />
+      <input type="text" formControlName="amount" id="idAmount" class="form-control" required />
     </div>
     <div class="form-group">
       <label for="dateOfBirth">Date d'échéance</label>
       <div class="input-group">
-        <input
-          id="idDueDate"
-          formControlName="dueDate"
-          class="form-control"
-          placeholder="yyyy-mm-dd"
-          name="dueDate"
-          ngbDatepicker
-          #dueDate="ngbDatepicker"
-        />
+        <input id="idDueDate" formControlName="dueDate" class="form-control" placeholder="yyyy-mm-dd" name="dueDate"
+          ngbDatepicker #dueDate="ngbDatepicker" />
         <div class="input-group-append">
-          <button
-            class="btn btn-outline-secondary calendar"
-            (click)="dueDate.toggle()"
-            type="button"
-          ></button>
+          <button class="btn btn-outline-secondary calendar" (click)="dueDate.toggle()" type="button"></button>
         </div>
       </div>
     </div>
     <div>
-      <button
-        class="btn btn-primary"
-        type="button"
-        data-toggle="collapse"
-        data-target="#referencesComplementaires"
-        aria-expanded="false"
-        aria-controls="referencesComplementaires"
-      >
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#referencesComplementaires"
+        aria-expanded="false" aria-controls="referencesComplementaires">
         Saisir des références complémentaires :
       </button>
     </div>
@@ -97,42 +57,24 @@
       <div class="card card-body">
         <div class="form-group">
           <label>Référence du paiement (recommandé) :</label>
-          <input
-            dtype="text"
-            maxlength="35"
-            formControlName="teccCanalId"
-            id="idTeccCanalId"
-            placeholder="Référence du paiement (recommandé)"
-          />
+          <input dtype="text" maxlength="35" formControlName="teccCanalId" id="idTeccCanalId" />
         </div>
         <div class="form-group">
           <label>Motif du paiement (recommandé) :</label>
-          <input
-            dtype="text"
-            maxlength="35"
-            placeholder="Motif du paiement (recommandé)"
-          />
+          <input dtype="text" maxlength="35" />
         </div>
         <div class="form-group">
           <label>Motif du paiement (recommandé) :</label>
-          <input
-            dtype="text"
-            maxlength="35"
-            placeholder="Motif du paiement (recommandé)"
-          />
+          <input dtype="text" maxlength="35" />
         </div>
         <div class="form-group">
           <label>Motif du paiement (recommandé) :</label>
-          <input
-            dtype="text"
-            maxlength="35"
-            placeholder="Motif du paiement (recommandé)"
-          />
+          <input dtype="text" maxlength="35" />
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <input type="submit" class="btn btn-success" value="Ajouter" />
+      <input type="submit" class="btn btn-success" value="Ajouter" [disabled]="createOVPForm.invalid" />
     </div>
   </form>
 </div>

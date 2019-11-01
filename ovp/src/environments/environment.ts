@@ -4,11 +4,10 @@
 
 export const environment = {
   production: false,
-  baseUrl : 'http://localhost:8080/permanent_transfer_agreements/'
-  //baseUrl : 'http://ELZUDEGGSCBP.yres.ytech:21032/RESS_Permanent_Transfer_Agreement/v1/permanent_transfer_agreements/'
-
+  baseUrl: 'http://localhost:8080/permanent_transfer_agreements/'
+  // baseUrl: 'http://localhost:8099/RESS_Permanent_Transfer_Agreement/v1/permanent_transfer_agreements'
+  // baseUrl : 'http://ELZUDEGGSCBP.yres.ytech:21032/RESS_Permanent_Transfer_Agreement/v1/permanent_transfer_agreements/'
 };
-
 
 /*
  * For easier debugging in development mode, you can import the following file

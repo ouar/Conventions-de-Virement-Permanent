@@ -8,9 +8,9 @@ describe('ListPermanentTransferAgreementsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListPermanentTransferAgreementsComponent ]
+      declarations: [ListPermanentTransferAgreementsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

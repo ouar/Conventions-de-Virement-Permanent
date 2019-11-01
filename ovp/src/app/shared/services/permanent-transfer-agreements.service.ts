@@ -49,15 +49,30 @@ export class PermanentTransferAgreementsService {
       headers
     });
   }
-
-  deletePermanentTransferAgreement(
-    accountNumber: string, fenceReason: string, idOvp: string
+  updatePermanentTransferAgreement(
+    permanentTransferAgreement: PermanentTransferAgreement
   ): Observable<any> {
     let headers = new HttpHeaders();
     headers = headers.append('content-type', 'application/json');
     headers = headers.append('idCR', '87800');
     // tslint:disable-next-line: align
-    return this.http.delete(this.baseUrl + idOvp, {
+    return this.http.put(this.baseUrl, permanentTransferAgreement, {
+      params: {
+        regional_bank_id: '87800'
+      },
+      headers
+    });
+  }
+  deletePermanentTransferAgreement(
+    accountNumber: string,
+    fenceReason: string,
+    idOvp: string
+  ): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.append('content-type', 'application/json');
+    headers = headers.append('idCR', '87800');
+    // tslint:disable-next-line: align
+    return this.http.delete(this.baseUrl + '/' + idOvp, {
       params: {
         regional_bank_id: '87800',
         debtor_account_number: accountNumber,

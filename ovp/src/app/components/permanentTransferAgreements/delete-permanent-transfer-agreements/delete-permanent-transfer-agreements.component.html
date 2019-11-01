@@ -2,42 +2,18 @@
   <h4 class="modal-title">
     Supprimer une Convention de Virement Permanent
   </h4>
-  <button
-    type="button"
-    class="close"
-    aria-label="Close"
-    (click)="activeModal.dismiss('Cross click')"
-  >
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
-  <form
-    [formGroup]="deleteOVPForm"
-    (ngSubmit)="deletePermanentTransferAgreements()"
-  >
-    <div class="form-group">
-      <label>Compte à débiter</label>
-      <input
-        type="text"
-        formControlName="customerAccountNumber"
-        id="idCustomerAccountNumber"
-        class="form-control"
-        required
-      />
-    </div>
+  <form [formGroup]="deleteOVPForm" (ngSubmit)="deletePermanentTransferAgreements()">
     <div class="form-group">
       <label>Motif de la Suppression</label>
-      <input
-        type="text"
-        formControlName="fenceReason"
-        id="idFenceReason"
-        class="form-control"
-        required
-      />
+      <input type="text" formControlName="fenceReason" id="idFenceReason" class="form-control" required />
     </div>
     <div class="modal-footer">
-      <input type="submit" class="btn btn-success" value="Supprimer" />
+      <input type="submit" class="btn btn-danger" value="Supprimer" [disabled]="deleteOVPForm.invalid" />
     </div>
   </form>
 </div>

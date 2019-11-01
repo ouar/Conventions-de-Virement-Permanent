@@ -12,7 +12,7 @@ export class PermanentTransferAgreement {
   codeDueDate?: string;
   @JsonProperty('periodicity_id')
   periodicityId?: string;
-  @JsonProperty('day_of_week')
+  @JsonProperty('dayOfWeek')
   dayOfWeek?: string;
   @JsonProperty('code_permanent_transfer_agreement')
   codePermanentTransferAgreement?: string;
@@ -34,7 +34,7 @@ export class PermanentTransferAgreement {
   teccCanalId?: string;
   @JsonProperty('customer_account_number')
   customerAccountNumber?: string;
-  @JsonProperty({clazz: Creditor, name: 'creditor'})
+  @JsonProperty({ clazz: Creditor, name: 'creditor' })
   creditor?: Creditor;
   @JsonProperty('end_due_date')
   endDueDate?: string;
@@ -69,5 +69,4 @@ export class PermanentTransferAgreement {
   btoa?(): string {
     return btoa(JSON.stringify(this));
   }
-
 }

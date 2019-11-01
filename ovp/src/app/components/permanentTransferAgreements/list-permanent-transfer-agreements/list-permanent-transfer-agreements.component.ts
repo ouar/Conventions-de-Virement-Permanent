@@ -2,14 +2,16 @@
 import { CreatePermanentTransferAgreementsComponent } from './../create-permanent-transfer-agreements/create-permanent-transfer-agreements.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageComponent } from './../message/message.component';
-import { GlobalService } from './../../../shared/services/global.service';
 import { Subscription } from 'rxjs';
 import { deserialize } from 'json-typescript-mapper';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PermanentTransferAgreementsService } from '../../../shared/services/permanent-transfer-agreements.service';
 import { PermanentTransferAgreement } from 'src/app/shared/models/permanent-transfer-agreement';
-import { MatDialog } from '@angular/material/dialog';
+// tslint:disable-next-line: max-line-length
+import { DeletePermanentTransferAgreementsComponent } from '../delete-permanent-transfer-agreements/delete-permanent-transfer-agreements.component';
+// tslint:disable-next-line: max-line-length
+import { EditPermanentTransferAgreementsComponent } from '../edit-permanent-transfer-agreements/edit-permanent-transfer-agreements.component';
 
 @Component({
   selector: 'app-list-permanent-transfer-agreements',
@@ -18,37 +20,38 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ListPermanentTransferAgreementsComponent
   implements OnInit, OnDestroy {
-  obs: Subscription;
-  permanentTransferAgreementForm: FormGroup;
-  listPermanentTransferAgreements: Array<PermanentTransferAgreement> = [];
-  private subscription: Subscription;
+  private findPermanentTransferAgreements$: Subscription;
+  private listPermanentTransferAgreements$: Subscription;
+  private clodeModalDelete$: Subscription;
+  private clodeModalCreate$: Subscription;
+  private clodeModalEdit$: Subscription;
+
+  protected permanentTransferAgreementForm: FormGroup;
+  protected listPermanentTransferAgreements: Array<
+    PermanentTransferAgreement
+  > = [];
+
   constructor(
     private permanentTransferAgreementsService: PermanentTransferAgreementsService,
     private formBuilder: FormBuilder,
-    private globalService: GlobalService,
-    private dialog: MatDialog,
     private modalService: NgbModal
   ) {}
 
   ngOnInit() {
-    if (this.globalService.ListPermanentTransferAgreements) {
-      this.permanentTransferAgreementForm = this.globalService.ListPermanentTransferAgreements;
-    } else {
-      this.permanentTransferAgreementForm = this.formBuilder.group({
-        accountNumber: ['', Validators.required],
-        amountMin: ['0.0', Validators.required],
-        amountMax: ['999999999.999', Validators.required]
-      });
-    }
+    this.permanentTransferAgreementForm = this.formBuilder.group({
+      accountNumber: ['', Validators.required],
+      amountMin: ['0.0', Validators.required],
+      amountMax: ['999999999.999', Validators.required]
+    });
 
-    this.subscription = this.permanentTransferAgreementsService.Array.subscribe(
+    this.listPermanentTransferAgreements$ = this.permanentTransferAgreementsService.Array.subscribe(
       state => {
         this.listPermanentTransferAgreements = state;
       }
     );
   }
   findPermanentTransferAgreements() {
-    this.obs = this.permanentTransferAgreementsService
+    this.findPermanentTransferAgreements$ = this.permanentTransferAgreementsService
       .findPermanentTransferAgreements(
         this.permanentTransferAgreementForm.value
       )
@@ -65,27 +68,72 @@ export class ListPermanentTransferAgreementsComponent
           );
         },
         error => {
-          this.dialog.open(MessageComponent, {
-            data: {
-              message: error.message
-            }
+          const modalRef = this.modalService.open(MessageComponent, {
+            size: 'sm'
           });
+          modalRef.componentInstance.message = error.error.errorDescription;
         }
       );
   }
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this.listPermanentTransferAgreements$) {
+      this.listPermanentTransferAgreements$.unsubscribe();
     }
-    if (this.obs) {
-      this.obs.unsubscribe();
+    if (this.findPermanentTransferAgreements$) {
+      this.findPermanentTransferAgreements$.unsubscribe();
     }
-    this.globalService.ListPermanentTransferAgreements = this.permanentTransferAgreementForm;
+    if (this.clodeModalDelete$) {
+      this.clodeModalDelete$.unsubscribe();
+    }
+    if (this.clodeModalCreate$) {
+      this.clodeModalCreate$.unsubscribe();
+    }
+    if (this.clodeModalEdit$) {
+      this.clodeModalEdit$.unsubscribe();
+    }
   }
 
-  openModal() {
+  createPermanentTransferAgreement() {
     const modalRef = this.modalService.open(
-      CreatePermanentTransferAgreementsComponent, { size: 'lg' }
+      CreatePermanentTransferAgreementsComponent,
+      { size: 'lg' }
+    );
+    this.clodeModalCreate$ = modalRef.componentInstance.createModalCloseEmitter.subscribe(
+      () => {
+        this.findPermanentTransferAgreements();
+      }
+    );
+  }
+
+  deletePermanentTransferAgreement(
+    permanentTransferAgreement: PermanentTransferAgreement
+  ) {
+    const modalRef = this.modalService.open(
+      DeletePermanentTransferAgreementsComponent,
+      { size: 'lg' }
+    );
+    modalRef.componentInstance.permanentTransferAgreement = permanentTransferAgreement;
+
+    this.clodeModalDelete$ = modalRef.componentInstance.deleteModalCloseEmitter.subscribe(
+      () => {
+        this.findPermanentTransferAgreements();
+      }
+    );
+  }
+
+  editPermanentTransferAgreement(
+    permanentTransferAgreement: PermanentTransferAgreement
+  ) {
+    const modalRef = this.modalService.open(
+      EditPermanentTransferAgreementsComponent,
+      { size: 'lg' }
+    );
+    modalRef.componentInstance.permanentTransferAgreement = permanentTransferAgreement;
+
+    this.clodeModalEdit$ = modalRef.componentInstance.editModalCloseEmitter.subscribe(
+      () => {
+        this.findPermanentTransferAgreements();
+      }
     );
   }
 }

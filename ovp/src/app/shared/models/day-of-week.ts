@@ -1,4 +1,4 @@
-export class Periodicity {
+export class DayOfWeek {
   id: string;
   wording: string;
 }
